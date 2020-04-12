@@ -1,53 +1,66 @@
 "use strict";
 
-import { Response, Request, NextFunction } from "express";
+import { Response, Request } from "express";
+import Event, { EventDocument } from "../models/Event";
+import { validate } from "../services/events";
 
 /**
  * Returns list
  * GET /
  */
-export const index = (req: Request, res: Response) => {
-    res.json({
-        success: true
-    });
+export const index = async (req: Request, res: Response) => {
+    const events = await Event.find({});
+    res.json(events);
 };
 
 /**
  * Returns single
  * GET /:id
  */
-export const get = (req: Request, res: Response) => {
-    res.json({
-        success: true
-    });
+export const get = async (req: Request, res: Response) => {
+    const event = await Event.findById(req.params.id);
+    res.json(event);
 };
 
 /**
  * Adds new
- * POST /add
+ * POST /
  */
-export const add = (req: Request, res: Response) => {
-    res.json({
-        success: true
-    });
+export const add = async (req: Request, res: Response) => {
+    const errors = await validate(req);
+    if (!errors.isEmpty()) {
+        res.status(400);
+        return res.json(errors.array());
+    }
+    
+    const event = new Event(req.body as EventDocument);
+    await event.save();
+    res.json(event);
 };
 
 /**
  * Updates existing
- * PUT /update/:id
+ * PUT /:id
  */
-export const upd = (req: Request, res: Response) => {
-    res.json({
-        success: true
-    });
+export const upd = async (req: Request, res: Response) => {
+    const errors = await validate(req);
+    if (!errors.isEmpty()) {
+        res.status(400);
+        return res.json(errors.array());
+    }
+    const event = await Event.findByIdAndUpdate(
+        req.params.id, req.body, { new: true }
+    );
+    res.json(event);
 };
 
 /**
  * Deletes single
- * DELETE /delete/:id
+ * DELETE /:id
  */
-export const del = (req: Request, res: Response) => {
+export const del = async (req: Request, res: Response) => {
+    await Event.findByIdAndDelete(req.params.id);
     res.json({
-        success: true
+        deleted: true
     });
 };

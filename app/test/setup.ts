@@ -37,10 +37,10 @@ if (mongoose.connection.readyState === 0) {
 });
 
 afterEach((done) => {
-  mongoose.disconnect();
   return done();
 });
 
 afterAll(done => {
+  mongoose.disconnect();
   return done();
 });
