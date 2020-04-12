@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  api-service:
+    hostname: api-service
+    container_name: api-service
+    build: ./
+    ports:
+      - 3001:3000
+    restart: unless-stopped
+    depends_on: 
+      - db-service
+    links:
+      - db-service
+    environment:
+      - MONGODB_URI_LOCAL=mongodb://db-service:27017/api
+      - MONGODB_URI=mongodb://db-service:27017/api
+  db-service:
+    hostname: db-service
+    container_name: db-service
+    image: mongo
+    volumes:
+      - ./data:/data/db

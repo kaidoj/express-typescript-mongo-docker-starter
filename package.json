@@ -1,0 +1,33 @@
+{
+  "name": "express-typescript-mongo-docker",
+  "version": "0.1.0",
+  "description": "Express, Typescript, Mongo, Docker starter",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker-compose up -d",
+    "build": "npm run cleanbuild && docker-compose up -d",
+    "cleanbuild": "docker-compose -f docker-compose.yml build --no-cache",
+    "cleanbuild:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml build --no-cache",
+    "start:out": "docker-compose up",
+    "build:out": "npm run cleanbuild && npm run start:out",
+    "start:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
+    "build:dev": "npm run cleanbuild:dev && npm run start:dev",
+    "stop": "docker-compose down"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaidoj/express-typescript-mongo-docker-starter.git"
+  },
+  "keywords": [
+    "express",
+    "typescript",
+    "mongo",
+    "docker"
+  ],
+  "author": "Kaido J <jast112@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kaidoj/express-typescript-mongo-docker-starter/issues"
+  },
+  "homepage": "https://github.com/kaidoj/express-typescript-mongo-docker-starter#readme"
+}

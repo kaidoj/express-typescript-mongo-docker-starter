@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  api-service:
+    build: 
+      context: ./
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./app:/app
+      - /app/dist
+      - /app/node_modules
