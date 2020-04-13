@@ -49,7 +49,7 @@ export const upd = async (req: Request, res: Response) => {
         return res.json(errors.array());
     }
     const event = await Event.findByIdAndUpdate(
-        req.params.id, req.body, { new: true }
+        req.params.id, req.body as EventDocument, { new: true }
     );
     res.json(event);
 };
